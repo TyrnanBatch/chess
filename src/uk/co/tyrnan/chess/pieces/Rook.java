@@ -31,13 +31,13 @@ public class Rook extends ChessPiece {
                 if (Board.ascii_board[currentPosition[0]][i].getColour() != Board.ascii_board[currentPosition[0]][currentPosition[1]].getColour()) {
                     possibleMoves.add(new int[]{currentPosition[0], i});
                 }
-                if (mutator == -1) {
-                    i = -1;
-                } else {
-                    i = currentPosition[1];
-                    mutator = -1;
-                }
-            } if (i == 7) {
+                if (mutator == -1) i = -1;
+                else i = currentPosition[1];
+
+                mutator = -1;
+            }
+
+            if (i == 7) {
                 i = currentPosition[1];
                 mutator = -1;
             }
@@ -52,13 +52,12 @@ public class Rook extends ChessPiece {
             } else if (Board.ascii_board[i][currentPosition[1]] != null && i != currentPosition[0]) {
                 if (Board.ascii_board[i][currentPosition[1]].getColour() != Board.ascii_board[currentPosition[0]][currentPosition[1]].getColour()) {
                     possibleMoves.add(new int[]{i, currentPosition[1]});
-                } if (mutator == -1) {
-                    i = -1;
-                } else {
-                    i = currentPosition[0];
-                    mutator = -1;
                 }
-            } if (i == 7) {
+                if (mutator == -1) i = -1;
+                else i = currentPosition[0];
+                mutator = -1;
+            }
+            if (i == 7) {
                 i = currentPosition[0];
                 mutator = -1;
             }
