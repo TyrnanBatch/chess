@@ -15,7 +15,7 @@ public class Board {
         //Black
         ascii_board[0][0] = Rook.black_rook_qs;
         ascii_board[0][1] = Knight.black_knight_qs;
-        ascii_board[0][2] = Bishop.black_bishop_qs;
+        ascii_board[4][5] = Bishop.black_bishop_qs;
         ascii_board[0][3] = Queen.black_queen;
         ascii_board[0][4] = King.black_king;
         ascii_board[0][5] = Bishop.black_bishop_ks;
