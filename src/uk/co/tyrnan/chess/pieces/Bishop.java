@@ -22,11 +22,10 @@ public class Bishop extends ChessPiece {
         ArrayList<int[]> possibleMoves = new ArrayList<>();
 
         int mutator = 1;
+        boolean reverse = false;
 
         int a;
         int b;
-
-        boolean reverse = false;
 
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < 8; i++) {

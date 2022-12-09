@@ -22,45 +22,43 @@ public class Rook extends ChessPiece {
         ArrayList<int[]> possibleMoves = new ArrayList<>();
 
         int mutator = 1;
+        boolean reverse = false;
 
-        // X
-        for (int i = currentPosition[1]; i > -1; i += mutator) {
-            if (Board.ascii_board[currentPosition[0]][i] == null) {
-                possibleMoves.add(new int[]{currentPosition[0], i});
-            } else if (Board.ascii_board[currentPosition[0]][i] != null && i != currentPosition[1]) {
-                if (Board.ascii_board[currentPosition[0]][i].getColour() != Board.ascii_board[currentPosition[0]][currentPosition[1]].getColour()) {
-                    possibleMoves.add(new int[]{currentPosition[0], i});
+        int a;
+        int b;
+
+        for (int j = 0; j < 2; j++) {
+            for (int i = currentPosition[1]; i > -1; i += mutator) {
+
+                if (reverse) {
+                    a = currentPosition[0];
+                    b = i;
+                } else {
+                    a = i;
+                    b = currentPosition[1];
                 }
-                if (mutator == -1) i = -1;
-                else i = currentPosition[1];
 
-                mutator = -1;
-            }
-
-            if (i == 7) {
-                i = currentPosition[1];
-                mutator = -1;
-            }
-        }
-
-        mutator = 1;
-
-        // Y
-        for (int i = currentPosition[0]; i > -1; i += mutator) {
-            if (Board.ascii_board[i][currentPosition[1]] == null) {
-                possibleMoves.add(new int[]{i, currentPosition[1]});
-            } else if (Board.ascii_board[i][currentPosition[1]] != null && i != currentPosition[0]) {
-                if (Board.ascii_board[i][currentPosition[1]].getColour() != Board.ascii_board[currentPosition[0]][currentPosition[1]].getColour()) {
-                    possibleMoves.add(new int[]{i, currentPosition[1]});
+                if (Board.ascii_board[a][b] == null) {
+                    possibleMoves.add(new int[]{a, b});
+                } else if (Board.ascii_board[a][b] != null && Board.ascii_board[a][b] != Board.ascii_board[currentPosition[0]][currentPosition[1]]) {
+                    if (Board.ascii_board[currentPosition[0]][i].getColour() != Board.ascii_board[currentPosition[0]][currentPosition[1]].getColour()) {
+                        possibleMoves.add(new int[]{currentPosition[0], i});
+                    }
+                    if (mutator == -1) {
+                        i = -1;
+                    } else {
+                        i = currentPosition[1];
+                    }
+                    mutator = -1;
                 }
-                if (mutator == -1) i = -1;
-                else i = currentPosition[0];
-                mutator = -1;
+
+                if (i == 7) {
+                    i = currentPosition[1];
+                    mutator = -1;
+                }
             }
-            if (i == 7) {
-                i = currentPosition[0];
-                mutator = -1;
-            }
+            mutator = 1;
+            reverse = true;
         }
 
         return possibleMoves;
