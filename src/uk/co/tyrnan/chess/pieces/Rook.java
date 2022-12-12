@@ -16,13 +16,20 @@ public class Rook extends ChessPiece {
     public static Rook white_rook_qs = new Rook(1, new int[]{7, 0});
     public static Rook white_rook_ks = new Rook(1, new int[]{7, 7});
 
+    private static final ChessPiece[][] boardArray = Board.getBoardArray();
+
+
     public ArrayList<int[]> getPossibleMoves() {
-        int[] currentPosition = getPosition();
+        final int[] currentPosition = getPosition();
 
         ArrayList<int[]> possibleMoves = new ArrayList<>();
 
+        final ChessPiece self = boardArray[currentPosition[0]][currentPosition[1]];
+
         int mutator = 1;
         boolean reverse = false;
+
+        ChessPiece checkingPos;
 
         int a;
         int b;
@@ -38,11 +45,13 @@ public class Rook extends ChessPiece {
                     b = currentPosition[1];
                 }
 
-                if (Board.ascii_board[a][b] == null) {
+                checkingPos = boardArray[a][b];
+
+                if (checkingPos == null) {
                     possibleMoves.add(new int[]{a, b});
-                } else if (Board.ascii_board[a][b] != null && Board.ascii_board[a][b] != Board.ascii_board[currentPosition[0]][currentPosition[1]]) {
-                    if (Board.ascii_board[currentPosition[0]][i].getColour() != Board.ascii_board[currentPosition[0]][currentPosition[1]].getColour()) {
-                        possibleMoves.add(new int[]{currentPosition[0], i});
+                } else if (checkingPos != self) {
+                    if (checkingPos.getColour() != self.getColour()) {
+                        possibleMoves.add(new int[]{a, b});
                     }
                     if (mutator == -1) {
                         i = -1;

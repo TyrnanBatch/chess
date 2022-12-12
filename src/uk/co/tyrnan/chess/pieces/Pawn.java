@@ -1,6 +1,11 @@
 package uk.co.tyrnan.chess.pieces;
 
-public class Pawn extends ChessPiece{
+import uk.co.tyrnan.chess.Board;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Pawn extends ChessPiece {
     public Pawn(int colour, int[] position) {
         super(colour, position);
     }
@@ -23,5 +28,60 @@ public class Pawn extends ChessPiece{
     public static Pawn white_pawn_7 = new Pawn(1, new int[]{6, 6});
     public static Pawn white_pawn_8 = new Pawn(1, new int[]{6, 7});
 
+    private static final ChessPiece[][] boardArray = Board.getBoardArray();
 
+
+    public ArrayList<int[]> getPossibleMoves() {
+        final int[] currentPosition = getPosition();
+
+        ArrayList<int[]> possibleMoves = new ArrayList<>();
+
+        final ChessPiece self = boardArray[currentPosition[0]][currentPosition[1]];
+
+        int mutator;
+
+        if (self.getColour() == 0) {
+            mutator = 1;
+        } else {
+            mutator = -1;
+        }
+
+        int a;
+        int b;
+
+        for (int i = 1; i < 3; i++) {
+
+            if (currentPosition[0] + (i * mutator) < 7) {
+                if (boardArray[currentPosition[0] + (i * mutator)][currentPosition[1]] == null) {
+                    possibleMoves.add(new int[]{currentPosition[0] + (i * mutator), currentPosition[1]});
+                } else {
+                    i = 3;
+                }
+            }
+
+            a = currentPosition[0] + mutator;
+            b = currentPosition[1] - 1;
+
+            if (a < 7 && a > 0) {
+                if (b >= 0 && boardArray[a][b] != null
+                        && boardArray[a][b].getColour() != self.getColour()) {
+                    possibleMoves.add(new int[]{a, b});
+                }
+
+                b = currentPosition[1] + 1;
+
+                if (currentPosition[1] + 1 <= 7 && boardArray[a][b] != null
+                        && boardArray[a][b].getColour() != self.getColour()) {
+                    possibleMoves.add(new int[]{a, b});
+                }
+            }
+
+        }
+
+        for (int[] i : possibleMoves) {
+            System.out.println(Arrays.toString(i));
+        }
+
+        return possibleMoves;
+    }
 }
