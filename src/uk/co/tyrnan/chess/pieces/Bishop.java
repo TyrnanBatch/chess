@@ -16,17 +16,22 @@ public class Bishop extends ChessPiece {
     public static Bishop white_bishop_qs = new Bishop(1, new int[]{7, 2});
     public static Bishop white_bishop_ks = new Bishop(1, new int[]{7, 5});
 
+    private static final ChessPiece[][] boardArray = Board.getBoardArray();
+
     public ArrayList<int[]> getPossibleMoves() {
-        int[] currentPosition = getPosition();
+        final int[] currentPosition = getPosition();
 
         ArrayList<int[]> possibleMoves = new ArrayList<>();
 
         int mutator = 1;
+        boolean reverse = false;
+
+        final ChessPiece self = boardArray[currentPosition[0]][currentPosition[1]];
 
         int a;
         int b;
 
-        boolean reverse = false;
+        ChessPiece checkingPos;
 
         for (int j = 0; j < 2; j++) {
             for (int i = 0; i < 8; i++) {
@@ -38,14 +43,16 @@ public class Bishop extends ChessPiece {
                     b = i * mutator + currentPosition[1];
                 }
 
+                checkingPos = boardArray[a][b];
+
                 if (a > 7 || b > 7) {
                     mutator = -1;
                     i = 0;
                 } else {
-                    if (Board.ascii_board[a][b] == null) {
+                    if (checkingPos == null) {
                         possibleMoves.add(new int[]{a, b});
-                    } else if (Board.ascii_board[a][b] != null && (currentPosition[0] != a && currentPosition[1] != b)) {
-                        if (Board.ascii_board[a][b].getColour() != Board.ascii_board[currentPosition[0]][currentPosition[1]].getColour()) {
+                    } else if (checkingPos != self) {
+                        if (checkingPos.getColour() != self.getColour()) {
                             possibleMoves.add(new int[]{a, b});
                         }
                         if (mutator == -1) {
